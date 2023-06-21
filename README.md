@@ -6,6 +6,7 @@ Tools used:
 - React (Vite + Typescript);
 - TailwindCSS (Styling);
 - React-Icons (...icons);
+- HeadlessUI (lightweight headless UI library);
 
 Tools to be added: 
 - Cypress;

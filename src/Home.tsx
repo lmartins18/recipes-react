@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Ingredient, Meal } from "./Entities/Meal";
-import { ThemeToggleButton } from './components/ThemeToggleButton';
+import { Header } from "./components/Header";
+
 
 export const Home = () => {
   const [meal, setMeal] = useState<Meal>();
@@ -49,8 +50,7 @@ export const Home = () => {
 
   return (
     <>
-      {/* Theme Toggle */}
-      <ThemeToggleButton />
+      <Header />
       {/* Meal */}
       <h1 className="text-xl"> {meal?.name}</h1>
       {meal?.mealThumb && (

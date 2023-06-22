@@ -20,7 +20,7 @@ export const ThemeToggleButton = () => {
   }, []);
 
   return (
-    <button onClick={changeTheme} title="Toggle Theme">
+    <button onClick={changeTheme} title="Toggle Theme" className="text-white">
       {darkTheme ? (
         <BsFillMoonStarsFill id="theme-toggle-light-icon" />
       ) : (

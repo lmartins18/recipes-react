@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Ingredient, Meal } from "./Entities/Meal";
 import { Header } from "./components/Header";
-
+import { TutorialVideoPanelButtonModal } from "./components/TutorialVideoPanelButtonModal";
 
 export const Home = () => {
   const [meal, setMeal] = useState<Meal>();
@@ -48,28 +48,44 @@ export const Home = () => {
       });
   }, []);
 
+  const IngredientsList = () => (
+    <ul>
+      <>
+        {meal?.ingredients?.map((ing) => (
+          <li>
+            {ing.name}: {ing.measure}
+          </li>
+        ))}
+      </>
+    </ul>
+  );
+
   return (
     <>
       <Header />
       {/* Meal */}
       <h1 className="text-xl"> {meal?.name}</h1>
-      {meal?.mealThumb && (
-        <img
-          className="w-[12rem] h-[12rem]"
-          src={meal.mealThumb}
-          alt="recipe photo"
-        />
+      <div className="flex flex-col overflow-auto">
+        {meal?.mealThumb && (
+          <img
+            className="w-[12rem] h-[12rem]"
+            src={meal.mealThumb}
+            alt="recipe photo"
+          />
+        )}
+        <br />
+        <div className="flex flex-1 px-12 whitespace-pre-wrap break-words indent-px overflow-auto pb-3">
+          <div className="flex flex-1">
+            <IngredientsList />
+          </div>
+          <div className="flex flex-1">
+            <p>{meal?.instructions}</p>
+          </div>
+        </div>
+      </div>
+      {meal?.youtube && (
+        <TutorialVideoPanelButtonModal videoUrl={meal?.youtube} />
       )}
-      <br />
-      <ul>
-        <>
-          {meal?.ingredients?.map((ing) => (
-            <li>
-              {ing.name}: {ing.measure}
-            </li>
-          ))}
-        </>
-      </ul>
     </>
   );
 };

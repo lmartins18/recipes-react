@@ -88,7 +88,7 @@ export const Home = () => {
                   alt={`${meal.name} picture`}
                 />
               )}
-              <div className="flex pt-6 px-4 justify-between">
+              <div className="flex pb-5 p-6 px-4 sm:pb-0 justify-between">
                 <span className="inline-flex gap-1">
                   <p className="font-bold">Category:</p>
                   <p>{meal?.category}</p>

@@ -1,7 +1,18 @@
 import { useEffect, useState } from "react";
-import { Ingredient, Meal } from "./Entities/Meal";
-import { Header } from "./components/Header";
-import { TutorialVideoPanelButtonModal } from "./components/TutorialVideoPanelButtonModal";
+import { MealIngredient, Meal } from "./Entities/Meal";
+import { Header } from "./components/Header/Header";
+import { GiChefToque } from "react-icons/gi";
+import { BiCameraMovie } from "react-icons/bi";
+import uniqid from "uniqid";
+
+// TODO change the type
+const Hr = ({ icon }: { icon: any }) => (
+  <div className="flex items-center justify-center w-full py-6">
+    <hr className="w-1/2 border-0 border-t-2 border-gray-300" />
+    <div className="px-4">{icon}</div>
+    <hr className="w-1/2 border-0 border-t-2 border-gray-300" />
+  </div>
+);
 
 export const Home = () => {
   const [meal, setMeal] = useState<Meal>();
@@ -12,9 +23,8 @@ export const Home = () => {
       .then((resp) => resp.json())
       .then((res) => {
         res.meals.forEach((meal: any) => {
-          console.log(res);
           // Get ingredients
-          let ingredients: Ingredient[] = [];
+          let ingredients: MealIngredient[] = [];
           for (var prop in meal) {
             if (Object.prototype.hasOwnProperty.call(meal, prop)) {
               // Check if property is ingredient.
@@ -49,11 +59,11 @@ export const Home = () => {
   }, []);
 
   const IngredientsList = () => (
-    <ul>
+    <ul className="p-0 sm:px-10 list-disc">
       <>
-        {meal?.ingredients?.map((ing) => (
-          <li>
-            {ing.name}: {ing.measure}
+        {meal?.ingredients?.map((ingredient) => (
+          <li key={uniqid()}>
+            {ingredient.name}: {ingredient.measure}
           </li>
         ))}
       </>
@@ -64,28 +74,52 @@ export const Home = () => {
     <>
       <Header />
       {/* Meal */}
-      <h1 className="text-xl"> {meal?.name}</h1>
-      <div className="flex flex-col overflow-auto">
-        {meal?.mealThumb && (
-          <img
-            className="w-[12rem] h-[12rem]"
-            src={meal.mealThumb}
-            alt="recipe photo"
-          />
-        )}
-        <br />
-        <div className="flex flex-1 px-12 whitespace-pre-wrap break-words indent-px overflow-auto pb-3">
-          <div className="flex flex-1">
+      <div className="p-6 bg-inherit dark:bg-inherit overflow-auto">
+        <h1 className="text-xl text-inherit dark:text-inherit pb-6 underline underline-offset-8 text-center sm:text-start">
+          {meal?.name}
+        </h1>
+        <div className="flex flex-col overflow-auto">
+          <div className="flex flex-col sm:flex-row whitespace-pre-wrap break-words overflow-auto">
+            <div id="container">
+              {meal?.mealThumb && (
+                <img
+                  className="w-[24rem] h-[24rem] border-double border-8 border-slate-900 dark:border-slate-100 rounded object-fill"
+                  src={meal.mealThumb}
+                  alt={`${meal.name} picture`}
+                />
+              )}
+              <div className="flex pt-6 px-4 justify-between">
+                <span className="inline-flex gap-1">
+                  <p className="font-bold">Category:</p>
+                  <p>{meal?.category}</p>
+                </span>
+                <span className="inline-flex gap-1">
+                  <p className="font-bold">Cuisine:</p>
+                  <p>{meal?.area}</p>
+                </span>
+              </div>
+            </div>
             <IngredientsList />
           </div>
-          <div className="flex flex-1">
-            <p>{meal?.instructions}</p>
-          </div>
+          <Hr icon={<GiChefToque />} />
+          <p>{meal?.instructions}</p>
         </div>
+        {meal?.youtube && (
+          <>
+            <Hr icon={<BiCameraMovie />} />
+            <div className="m-6 h-[85vh]">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${meal.youtube.slice(
+                  -11
+                )}?wmode=transparent`}
+                title="Meal Video"
+                allowFullScreen
+              />
+            </div>
+          </>
+        )}
       </div>
-      {meal?.youtube && (
-        <TutorialVideoPanelButtonModal videoUrl={meal?.youtube} />
-      )}
     </>
   );
 };

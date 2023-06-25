@@ -1,4 +1,4 @@
-import { Ingredient } from ".";
+import { MealIngredient } from ".";
 
 export interface Meal {
   id: number;
@@ -10,7 +10,7 @@ export interface Meal {
   mealThumb: string | null;
   tags: string | null;
   youtube: string | null;
-  ingredients: Ingredient[] | null;
+  ingredients: MealIngredient[] | null;
   source: string | null;
   imageSource: string | null;
   creativeCommonsConfirmed: string | null;

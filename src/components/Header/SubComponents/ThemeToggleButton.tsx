@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
-import { ThemeContext } from "../contexts/theme-context";
+import { ThemeContext } from "../../../contexts/theme-context";
 
 export const ThemeToggleButton = () => {
   const { currentTheme, changeCurrentTheme } = useContext(ThemeContext);
@@ -20,7 +20,7 @@ export const ThemeToggleButton = () => {
   }, []);
 
   return (
-    <button onClick={changeTheme} title="Toggle Theme" className="text-white">
+    <button onClick={changeTheme} title="Toggle Theme" className="text-inherit">
       {darkTheme ? (
         <BsFillMoonStarsFill id="theme-toggle-light-icon" />
       ) : (

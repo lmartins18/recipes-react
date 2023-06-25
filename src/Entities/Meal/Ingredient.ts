@@ -1,4 +1,6 @@
 export interface Ingredient {
-    name: string;
-    measure: string;
-  }
+  idIngredient: number;
+  strIngredient: string;
+  strDescription: string;
+  strType: string | null;
+}

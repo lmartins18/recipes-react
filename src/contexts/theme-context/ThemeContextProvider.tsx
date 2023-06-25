@@ -5,7 +5,6 @@ export const ThemeContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [theme, setTheme] = useState("");
-
   const changeCurrentTheme = (newTheme: "light" | "dark") => setTheme(newTheme);
 
   useEffect(() => {

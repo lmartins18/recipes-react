@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BiCategoryAlt } from "react-icons/bi";
+import { FaBowlFood } from "react-icons/fa6";
 import { Dropdown } from "../Dropdown";
 import { DropdownStringItem } from "../DropdownStringItem";
 import { Ingredient } from "../../../../../Entities/Meal";
@@ -18,7 +18,7 @@ export const IngredientsDropdown = () => {
   }, []);
   return (
     <Dropdown
-      icon={BiCategoryAlt}
+      icon={FaBowlFood}
       title={"Ingredients"}
       items={ingredients}
     />

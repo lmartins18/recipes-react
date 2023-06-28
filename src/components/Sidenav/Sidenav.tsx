@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { Title } from "../Title";
@@ -8,10 +8,16 @@ import {
   CuisinesDropDown,
   CategoriesDropDown,
 } from "./SubComponents";
+import { RecipesDialogContext } from "../../contexts/recipes-dialog-context/RecipesDialogContextProvider";
 
 export const Sidenav = () => {
   const [nav, setNav] = useState(false);
   const toggleNav = () => setNav(!nav);
+  const { isOpen } = useContext(RecipesDialogContext);
+
+  useEffect(() => {
+    if (isOpen) toggleNav();
+  }, [isOpen]);
 
   return (
     <>
@@ -33,7 +39,7 @@ export const Sidenav = () => {
         >
           <div className="flex flex-col justify-between">
             <ul
-              className="relative m-0 list-none px-1 divide-y-2 divide-dashed divide-slate-600 [&>*]:py-2"
+              className="relative m-0 list-none px-1 divide-y-2  divide-slate-200/70 [&>*]:py-2"
               data-te-sidenav-menu-ref
             >
               <li>

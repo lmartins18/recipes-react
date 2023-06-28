@@ -24,7 +24,6 @@ export const Dropdown = ({ icon: Icon, title, items }: DropdownProps) => {
               <Icon />
               <span
                 className="flex-1 ml-3 text-left whitespace-nowrap"
-                sidebar-toggle-item
               >
                 {title}
               </span>

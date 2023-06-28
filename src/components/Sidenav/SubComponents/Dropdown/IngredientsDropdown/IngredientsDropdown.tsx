@@ -10,7 +10,6 @@ export const IngredientsDropdown = () => {
     fetch("https://www.themealdb.com/api/json/v1/1/list.php?i=list")
       .then((res) => res.json())
       .then((resp: { meals: Ingredient[] }) => {
-        console.log(resp);
         const ingredients = resp.meals.map((ingredient: Ingredient) => (
           <DropdownStringItem item={ingredient.strIngredient} />
         ));

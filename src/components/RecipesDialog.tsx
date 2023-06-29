@@ -5,9 +5,10 @@ import { RxCross1 } from "react-icons/rx";
 import uniqid from "uniqid";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { Spinner } from "./Spinner";
+import { apiParams } from "../contexts/apiParams";
 
 interface RecipesDialogParams {
-  filter: string;
+  apiParams: apiParams;
   isOpen: boolean;
   // TODO: fix type below.
   toggleIsOpen: () => void;
@@ -18,7 +19,7 @@ interface tempType {
   mealImgSrc: string;
 }
 export const RecipesDialog = ({
-  filter,
+  apiParams,
   isOpen,
   toggleIsOpen,
 }: RecipesDialogParams) => {
@@ -28,11 +29,16 @@ export const RecipesDialog = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?${filter}`)
+    fetch(
+      `https://www.themealdb.com/api/json/v1/1/${apiParams.type}.php?${apiParams.argument}`
+    )
+      // https://www.themealdb.com/api/json/v1/1/filter.php?s=arr
+      // https://www.themealdb.com/api/json/v1/1/search.php?s=Arr
       .then((resp) => resp.json())
       // TODO this needs a type, same type as in Home component;
       .then((res: any) => {
         // Dry this
+        console.log(res);
         let recipes: tempType[] = [];
         res.meals.forEach((meal: any) => {
           recipes.push({
@@ -43,7 +49,7 @@ export const RecipesDialog = ({
         setRecipes(recipes);
         setLoading(false);
       });
-  }, [filter]);
+  }, [apiParams]);
   const handleScroll = (e: any) => {
     setScroll(e.target.scrollTop > 500);
   };
@@ -102,7 +108,10 @@ export const RecipesDialog = ({
                 !scroll && " hidden"
               }`}
             >
-              <button onClick={returnToTop}>
+              <button
+                onClick={returnToTop}
+                className="dark:text-slate-500 dark:hover:text-slate-200"
+              >
                 <FaArrowAltCircleUp />
               </button>
             </div>

@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { RecipesDialogContext } from "../../../../../contexts/recipes-dialog-context/RecipesDialogContextProvider";
 
 export const Cuisine = ({ cuisine }: { cuisine: string }) => {
-  const { toggleIsOpen, changeFilter } = useContext(RecipesDialogContext);
+  const { toggleIsOpen, changeApiParams: changeFilter } =
+    useContext(RecipesDialogContext);
   const imgUrl = new URL(
     `../../../../../assets/img/flags/${cuisine}.svg`,
     import.meta.url
@@ -11,7 +12,7 @@ export const Cuisine = ({ cuisine }: { cuisine: string }) => {
     // Open modal.
     toggleIsOpen();
     // Fetch recipes.
-    changeFilter(`a=${cuisine}`);
+    changeFilter({ type: "filter", argument: `a=${cuisine}` });
   };
   return (
     <a

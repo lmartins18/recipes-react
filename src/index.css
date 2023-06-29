@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+ @apply focus:!outline-none focus-visible:!outline-none
+}
 html,
 body,
 #root    {

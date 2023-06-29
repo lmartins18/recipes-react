@@ -7,13 +7,14 @@ interface DropdownStringItemProps {
 }
 
 export const DropdownStringItem = ({ item, type }: DropdownStringItemProps) => {
-  const { toggleIsOpen, changeFilter } = useContext(RecipesDialogContext);
+  const { toggleIsOpen, changeApiParams: changeFilter } =
+    useContext(RecipesDialogContext);
   const fetchRecipes = () => {
     const filter = type === "ingredient" ? "i" : "c";
     // Open modal.
     toggleIsOpen();
     // Fetch recipes.
-    changeFilter(`${filter}=${item}`);
+    changeFilter({ type: "filter", argument: `${filter}=${item}` });
   };
   return (
     <a

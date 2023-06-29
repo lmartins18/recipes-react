@@ -68,7 +68,7 @@ export const RecipeModalItem = ({
           className="w-64 sm:w-32 mb-3 border-double border-8 border-slate-900 dark:border-slate-100 rounded object-fill m-auto"
           src={mealImgSrc}
           alt={`${mealName} picture`}
-          loading="lazy"
+
         />
       )}
       <h1 className="text-inherit dark:text-slate-200 text-center line-clamp-1">

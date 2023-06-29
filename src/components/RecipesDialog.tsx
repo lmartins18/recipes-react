@@ -1,13 +1,10 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { RecipeModalItem } from "./RecipeModalItem";
 import { RxCross1 } from "react-icons/rx";
 import uniqid from "uniqid";
 import { FaArrowAltCircleUp } from "react-icons/fa";
+import { Spinner } from "./Spinner";
 
 interface RecipesDialogParams {
   filter: string;
@@ -28,6 +25,7 @@ export const RecipesDialog = ({
   const [recipes, setRecipes] = useState<tempType[]>([]);
   const modalBody = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?${filter}`)
@@ -43,6 +41,7 @@ export const RecipesDialog = ({
           });
         });
         setRecipes(recipes);
+        setLoading(false);
       });
   }, [filter]);
   const handleScroll = (e: any) => {
@@ -76,30 +75,36 @@ export const RecipesDialog = ({
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <div
-              id="modal-body"
-              ref={modalBody}
-              onScroll={handleScroll}
-              className="grid grid-flow-row sm:grid-cols-3 p-6 overflow-auto flex-wrap h-full scroll-smooth mb-1"
-            >
-              {recipes.map((recipe) => (
-                <RecipeModalItem
-                  mealName={recipe.mealName}
-                  mealImgSrc={recipe.mealImgSrc}
-                  key={uniqid()}
-                />
-              ))}
-
-              <div
-                id="scroll-to-top-button-container"
-                className={`absolute bottom-2 right-4 text-3xl ${
-                  !scroll && " hidden"
-                }`}
-              >
-                <button onClick={returnToTop}>
-                  <FaArrowAltCircleUp />
-                </button>
+            {loading ? (
+              <div className="m-auto">
+                <Spinner />
               </div>
+            ) : (
+              <div
+                id="modal-body"
+                ref={modalBody}
+                onScroll={handleScroll}
+                className="grid grid-flow-row sm:grid-cols-3 p-6 overflow-auto flex-wrap h-full scroll-smooth mb-1"
+              >
+                {recipes.map((recipe) => (
+                  <RecipeModalItem
+                    mealName={recipe.mealName}
+                    mealImgSrc={recipe.mealImgSrc}
+                    key={uniqid()}
+                  />
+                ))}
+              </div>
+            )}
+
+            <div
+              id="scroll-to-top-button-container"
+              className={`absolute bottom-2 right-4 text-3xl ${
+                !scroll && " hidden"
+              }`}
+            >
+              <button onClick={returnToTop}>
+                <FaArrowAltCircleUp />
+              </button>
             </div>
           </div>
         </div>

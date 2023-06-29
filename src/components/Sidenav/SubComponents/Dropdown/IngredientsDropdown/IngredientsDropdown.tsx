@@ -11,7 +11,7 @@ export const IngredientsDropdown = () => {
       .then((res) => res.json())
       .then((resp: { meals: Ingredient[] }) => {
         const ingredients = resp.meals.map((ingredient: Ingredient) => (
-          <DropdownStringItem item={ingredient.strIngredient} />
+          <DropdownStringItem item={ingredient.strIngredient} type={"ingredient"} />
         ));
         setingredients(ingredients);
       });

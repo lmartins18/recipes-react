@@ -12,7 +12,7 @@ export const CategoriesDropDown = () => {
       .then((resp: { meals: { strCategory: string }[] }) => {
         const categoriesElements = resp.meals.map(
           (category: { strCategory: string }) => (
-            <DropdownStringItem item={category.strCategory} />
+            <DropdownStringItem item={category.strCategory} type={"category"} />
           )
         );
         setCategories(categoriesElements);

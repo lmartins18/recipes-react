@@ -15,7 +15,7 @@ export const RecipesDialogContext = createContext<RecipesDialogContextProps>({
   },
   isOpen: false,
   toggleIsOpen: () => {},
-});
+});''
 
 export const RecipesDialogContextProvider: FC<{ children: ReactNode }> = ({
   children,

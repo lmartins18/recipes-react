@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { MealContext } from "../contexts/recipe-context";
-import { RecipesDialogContext } from "../contexts/recipes-dialog-context/RecipesDialogContextProvider";
 import { MealIngredient } from "../Entities/Meal";
 
 export const RecipeModalItem = ({

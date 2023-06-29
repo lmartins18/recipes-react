@@ -6,7 +6,7 @@ import uniqid from "uniqid";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { Spinner } from "./Spinner";
 import { apiParams } from "../contexts/apiParams";
-
+import noData from "../assets/img/no-data.svg";
 interface RecipesDialogParams {
   apiParams: apiParams;
   isOpen: boolean;
@@ -23,7 +23,7 @@ export const RecipesDialog = ({
   isOpen,
   toggleIsOpen,
 }: RecipesDialogParams) => {
-  const [recipes, setRecipes] = useState<tempType[]>([]);
+  const [recipes, setRecipes] = useState<tempType[] | null>(null);
   const modalBody = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,8 +38,11 @@ export const RecipesDialog = ({
       // TODO this needs a type, same type as in Home component;
       .then((res: any) => {
         // Dry this
-        console.log(res);
         let recipes: tempType[] = [];
+        if (!res.meals) {
+          setRecipes(null);
+          return;
+        }
         res.meals.forEach((meal: any) => {
           recipes.push({
             mealName: meal.strMeal.toString(),
@@ -81,7 +84,12 @@ export const RecipesDialog = ({
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            {loading ? (
+            {recipes === null ? (
+              <div className="flex flex-col gap-6 w-44 mx-auto mt-32 text-center text-2xl">
+                <img src={noData} alt="no data available" />
+                <p>No Recipes Found.</p>
+              </div>
+            ) : loading ? (
               <div className="m-auto">
                 <Spinner />
               </div>

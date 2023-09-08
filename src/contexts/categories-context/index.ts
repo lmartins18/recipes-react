@@ -1,0 +1,1 @@
+export { CategoriesContext } from "./CategoriesContext";

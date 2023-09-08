@@ -62,6 +62,7 @@ export const RecipeModalItem = ({
     <div
       className="flex flex-col cursor-pointer w-fit h-fit p-6 m-auto"
       onClick={fetchNewRecipe}
+      data-test="recipes-dialog-item"
     >
       {mealImgSrc && (
         <img

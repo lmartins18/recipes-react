@@ -10,6 +10,7 @@ interface DropdownProps {
 }
 
 export const Dropdown = ({ icon: Icon, title, items }: DropdownProps) => {
+  const dataTestTitle = title.toLowerCase();
   return (
     <>
       <Menu>
@@ -18,22 +19,23 @@ export const Dropdown = ({ icon: Icon, title, items }: DropdownProps) => {
           className="flex items-center w-full p-2 transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700"
           aria-controls="dropdown-example"
           data-collapse-toggle="dropdown-example"
+          data-test={`dropdown-${dataTestTitle}`}
         >
           {({ open }) => (
             <>
               <Icon />
-              <span
-                className="flex-1 ml-3 text-left whitespace-nowrap"
-              >
+              <span className="flex-1 ml-3 text-left whitespace-nowrap">
                 {title}
               </span>
               {open ? <FiChevronUp /> : <FiChevronDown />}
             </>
           )}
         </Menu.Button>
-        <Menu.Items className="flex h-52 flex-col overflow-auto mx-1">
+        <Menu.Items className="flex h-52 flex-col overflow-auto mx-1" data-test={`dropdown-${dataTestTitle}-item`}>
           {items.map((item) => (
-            <Menu.Item key={uniqid()}>{item}</Menu.Item>
+            <Menu.Item key={uniqid()}>
+              {item}
+            </Menu.Item>
           ))}
         </Menu.Items>
       </Menu>

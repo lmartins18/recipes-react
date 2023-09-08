@@ -2,9 +2,28 @@ import { useContext, useEffect } from "react";
 import { MealIngredient } from "./Entities/Meal";
 import { Recipe } from "./components/Recipe";
 import { MealContext } from "./contexts/recipe-context";
+import { useQuery } from "react-query";
 
 export const Home = () => {
   const { currentMeal, changeCurrentMeal } = useContext(MealContext);
+  // Get data for dropdowns.
+  const getData = async () => {
+    const cuisines = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+    ).then((res) => res.json());
+
+    const ingredients = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
+    ).then((res) => res.json());
+
+    return { cuisines, ingredients };
+  }
+
+  const {} = useQuery(
+    "dropdownData",
+    getData,
+    { staleTime: Infinity }
+  );
 
   useEffect(() => {
     if (!currentMeal) {

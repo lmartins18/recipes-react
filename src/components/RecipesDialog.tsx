@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { RecipeModalItem } from "./RecipeModalItem";
+import { RecipeModalItem } from "./RecipeDialogItem";
 import { RxCross1 } from "react-icons/rx";
 import uniqid from "uniqid";
 import { FaArrowAltCircleUp } from "react-icons/fa";
@@ -10,11 +10,9 @@ import noData from "../assets/img/no-data.svg";
 interface RecipesDialogParams {
   apiParams: apiParams;
   isOpen: boolean;
-  // TODO: fix type below.
   toggleIsOpen: () => void;
 }
-// TODO: change this NEXT TIME!
-interface tempType {
+interface recipe {
   mealName: string;
   mealImgSrc: string;
 }
@@ -23,7 +21,7 @@ export const RecipesDialog = ({
   isOpen,
   toggleIsOpen,
 }: RecipesDialogParams) => {
-  const [recipes, setRecipes] = useState<tempType[] | null>(null);
+  const [recipes, setRecipes] = useState<recipe[] | null>(null);
   const modalBody = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,13 +30,11 @@ export const RecipesDialog = ({
     fetch(
       `https://www.themealdb.com/api/json/v1/1/${apiParams.type}.php?${apiParams.argument}`
     )
-      // https://www.themealdb.com/api/json/v1/1/filter.php?s=arr
-      // https://www.themealdb.com/api/json/v1/1/search.php?s=Arr
       .then((resp) => resp.json())
       // TODO this needs a type, same type as in Home component;
       .then((res: any) => {
         // Dry this
-        let recipes: tempType[] = [];
+        let recipes: recipe[] = [];
         if (!res.meals) {
           setRecipes(null);
           return;
